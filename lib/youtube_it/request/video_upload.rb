@@ -265,7 +265,7 @@ class YouTubeIt
       def videos(idxes_to_fetch)
         idxes_to_fetch.each_slice(50).map do |idxes|
           post = Nokogiri::XML <<-BATCH
-              <feed 
+              <feed
                 xmlns='http://www.w3.org/2005/Atom'
                 xmlns:media='http://search.yahoo.com/mrss/'
                 xmlns:batch='http://schemas.google.com/gdata/batch'
@@ -290,7 +290,7 @@ class YouTubeIt
           YouTubeIt::Parser::BatchVideoFeedParser.new(response).parse
         end.reduce({},:merge)
       end
-      
+
       def profiles(usernames_to_fetch)
         usernames_to_fetch.each_slice(50).map do |usernames|
           post = Nokogiri::XML <<-BATCH
@@ -740,7 +740,7 @@ class YouTubeIt
           end
           builder.use FaradayMiddleware::YoutubeAuthHeader, authorization_headers
           builder.use Faraday::Response::YouTubeIt
-          builder.adapter :excon
+          builder.adapter Faraday.default_adapter
         end
       end
     end
